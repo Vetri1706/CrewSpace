@@ -159,7 +159,7 @@ export async function testEnvironment(
       const args = ["exec", "--json"];
       if (search) args.unshift("--search");
       if (bypass) args.push("--dangerously-bypass-approvals-and-sandbox");
-      if (model) args.push("--model", model);
+      if (model && model.toLowerCase() !== "default") args.push("--model", model);
       if (modelReasoningEffort) {
         args.push("-c", `model_reasoning_effort=${JSON.stringify(modelReasoningEffort)}`);
       }

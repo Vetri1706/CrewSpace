@@ -276,7 +276,10 @@ export async function createApp(
     }),
   );
   app.use("/api", api);
-  app.use("/api", (_req, res) => {
+  app.use("/api", (req, res, next) => {
+    if (opts.uiMode === "vite-dev" && /\.(ts|tsx|js|jsx|css|json|vue|svelte)(\?|$)/.test(req.url)) {
+      return next();
+    }
     res.status(404).json({ error: "API route not found" });
   });
   app.use(pluginUiStaticRoutes(db, {
